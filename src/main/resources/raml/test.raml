@@ -1,0 +1,47 @@
+#%RAML 0.8
+---
+title: "Test Service"
+version: v1
+schemas:
+    - testBean: |
+        { "$schema": "http://json-schema.org/draft-03/schema",
+          "type": "object",
+          "description": "A Test Bean",
+          "properties": {
+            "someProperty": {"type": "string", "required": false }
+          },
+          "additionalProperties": false          
+        }                     
+        
+resourceTypes:
+    - base:
+        get?:
+          responses:
+            200:
+              description: "OK"
+            404:
+              description: "Not found"
+        post?: 
+          responses:
+            201:
+              description: "Created"
+           
+    - typedCollection:
+        type: base        
+        post: 
+            body: 
+                application/json:
+                    schema: <<collectionSchema>>
+                    
+    - typedMember:      
+        type: base
+        get:
+            responses:
+                200:
+                    body:
+                        application/json:
+                            schema: <<schema>>
+/test:    
+    /{someId}:
+        type: { typedMember: {schema: testBean } }
+        
