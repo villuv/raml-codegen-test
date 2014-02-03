@@ -41,7 +41,16 @@ resourceTypes:
                     body:
                         application/json:
                             schema: <<schema>>
-/test:    
+/test:
+    /new:
+        post:
+          body:
+            application/json:
+              schema: |
+                { "$schema": "http://json-schema.org/draft-03/schema",
+                  "type": "array",
+                  "items": { "$ref": "testBean" }
+                }
     /{someId}:
         type: { typedMember: {schema: testBean } }
         
