@@ -12,6 +12,11 @@ schemas:
           },
           "additionalProperties": false          
         }                     
+    - testBeans: |
+        { "$schema": "http://json-schema.org/draft-03/schema",
+          "type": "array",
+          "items": {"$ref": "testBean"}
+        }
         
 resourceTypes:
     - base:
@@ -46,11 +51,7 @@ resourceTypes:
         post:
           body:
             application/json:
-              schema: |
-                { "$schema": "http://json-schema.org/draft-03/schema",
-                  "type": "array",
-                  "items": { "$ref": "testBean" }
-                }
+              schema: testBeans
     /{someId}:
         type: { typedMember: {schema: testBean } }
         
